@@ -1,0 +1,9 @@
+h1 {
+  font-size: 2em;
+  text-align: center;
+}
+
+.selectionDiv {
+  display: inline-block;
+  width: 475px;
+}
