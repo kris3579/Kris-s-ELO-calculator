@@ -2,6 +2,8 @@
 <html>
   <head>
     <title>ELO Generator</title>
+    <link href="reset.css" rel="stylesheet" type="text/css">
+    <link href="style.css" rel="stylesheet" type="text/css">
   </head>
 
   <body>
@@ -12,15 +14,21 @@
     </header>
     <main>
 
+    <section id="selectionSection">
       <div id="selection1" class="selectionDiv">
         <img src="https://via.placeholder.com/350x150" alt="">
-        <p id="selection1p">Test1</p>
+        <button id="selection1button" class="buttons"></button>
       </div>
 
       <div id="selection2" class="selectionDiv">
         <img src="https://via.placeholder.com/350x150" alt="">
-        <p id="selection2p">Test2</p>
+        <button id="selection2button" class="buttons"></button>
       </div>
+    </section>
+
+    <section id="tableSection">
+      <table id="table"></table>
+    </section>
 
     </main>
     <script src="app.js"></script>
