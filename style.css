@@ -5,12 +5,13 @@ h1 {
 
 table {
   width: 50%;
-  margin: 0 auto;
+  margin: 5% auto;
 }
 
 th, td {
   text-align: center;
   border: black solid 1px;
+  font-size: 1.25em;
 }
 
 .selectionDiv {
@@ -20,13 +21,13 @@ th, td {
 
 .selectionDiv img {
   display: block;
-  margin: 10px auto;
+  margin: 2% auto;
   width: 350px;
 }
 
 .buttons {
   display: block;
-  margin: 10px auto;
+  margin: 2% auto;
 }
 
 #selectionSection {

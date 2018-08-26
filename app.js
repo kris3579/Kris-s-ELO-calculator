@@ -2,13 +2,14 @@
 
 let testArray = [];
 let rowsArray = [];
+let noRepeat = [];
 
 
-function TestObject(name, picture) {
+function TestObject(name) {
   this.name = name;
-  this.picture = picture;
+  // this.picture = picture;
   this.score = 2000;
-  this.rank = 0;
+  this.rank = 1;
 
   testArray.push(this);
 }
@@ -22,7 +23,12 @@ let selection2;
 
 
 function randomSelection(array) {
-  return array[Math.floor(Math.random() * array.length)];
+  checkNoRepeat();
+  var random = array[Math.floor(Math.random() * array.length)];
+  while (noRepeat.includes(random.name)) {
+    random = array[Math.floor(Math.random() * array.length)];
+  }
+  return random;
 }
 
 
@@ -37,6 +43,8 @@ function rollSelections() {
   while (selection1 === selection2) {
     reRollSelections();
   }
+  noRepeat.push(selection1);
+  noRepeat.push(selection2);
 }
 
 
@@ -50,20 +58,19 @@ function newChoice() {
 }
 
 
-selected1.addEventListener('click', function (event) {
-  selection1.score++;
-  // console.log(event.target.getAttribute('value'));
+selected1.addEventListener('click', function () {
+  calcScore(selection1, selection2);
   newChoice();
 });
 
-selected2.addEventListener('click', function (event) {
-  // console.log(event.target.getAttribute('value'));
+selected2.addEventListener('click', function () {
+  calcScore(selection2, selection1);
   newChoice();
 });
 
 
 function nukeData() {
-  for (let i = 0; i < rowsArray.length; i++ ) {
+  for (let i = 0; i < rowsArray.length; i++) {
     document.getElementById('table').removeChild(rowsArray[i]);
   }
   rowsArray = [];
@@ -112,14 +119,62 @@ function makeTableData() {
     dataRow.appendChild(score);
 
     rowsArray.push(dataRow);
-    sortRows();
+    sortRanks(testArray);
     document.getElementById('table').appendChild(dataRow);
   }
 }
 
 
-function sortRows() {
-  
+function sortRanks(array) {
+  array.sort(function (a, b) {
+    return b.score - a.score;
+  });
+
+  let rank = 1;
+  for (var i = 0; i < array.length; i++) {
+    if (i > 0 && array[i].score < array[i - 1].score) {
+      rank++;
+    }
+    array[i].rank = rank;
+  }
+}
+
+
+function probArray(score1, score2) {
+  let probArray = [];
+  if (score1 > score2) {
+    probArray.push(score1, score2);
+    return probArray;
+  } else {
+    probArray.push(score2, score1);
+    return probArray;
+  }
+}
+
+
+function calcScore(winner, loser) {
+  let k = 32;
+  let probabilityArray = probArray(winner.score, loser.score);
+  let higherProb = (1.0 / (1.0 + Math.pow(10, ((probabilityArray[0] - probabilityArray[1]) / 400))));
+  let lowerProb = (1.0 / (1.0 + Math.pow(10, ((probabilityArray[1] - probabilityArray[0]) / 400))));
+  if (winner.score > loser.score) {
+    winner.score = Math.floor(winner.score + k * (1 - higherProb));
+    loser.score = Math.floor(loser.score + k * (0 - lowerProb));
+  } else if (winner.score === loser.score) {
+    winner.score = Math.floor(winner.score + k * (1 - 0.5));
+    loser.score = Math.floor(loser.score + k * (1 - 0.5));
+  } else {
+    winner.score = Math.floor(winner.score + k * (1 - lowerProb));
+    loser.score = Math.floor(loser.score + k * (0 - higherProb));
+  }
+}
+
+
+function checkNoRepeat() {
+  if (noRepeat.length === (Math.floor(testArray.length / 6))) {
+    noRepeat.shift();
+    noRepeat.shift();
+  }
 }
 
 
@@ -130,11 +185,96 @@ function makeTable() {
 }
 
 
-new TestObject('test1', 'https://via.placeholder.com/350x150');
-new TestObject('test2', 'https://via.placeholder.com/350x150');
-new TestObject('test3', 'https://via.placeholder.com/350x150');
-new TestObject('test4', 'https://via.placeholder.com/350x150');
-new TestObject('test5', 'https://via.placeholder.com/350x150');
+new TestObject('test1');
+new TestObject('test2');
+new TestObject('test3');
+new TestObject('test4');
+new TestObject('test5');
+new TestObject('test1');
+new TestObject('test2');
+new TestObject('test3');
+new TestObject('test4');
+new TestObject('test5');
+new TestObject('test1');
+new TestObject('test2');
+new TestObject('test3');
+new TestObject('test4');
+new TestObject('test5');
+new TestObject('test1');
+new TestObject('test2');
+new TestObject('test3');
+new TestObject('test4');
+new TestObject('test5');
+new TestObject('test1');
+new TestObject('test2');
+new TestObject('test3');
+new TestObject('test4');
+new TestObject('test5');
+new TestObject('test1');
+new TestObject('test2');
+new TestObject('test3');
+new TestObject('test4');
+new TestObject('test5');
+new TestObject('test1');
+new TestObject('test2');
+new TestObject('test3');
+new TestObject('test4');
+new TestObject('test5');
+new TestObject('test1');
+new TestObject('test2');
+new TestObject('test3');
+new TestObject('test4');
+new TestObject('test5');
+new TestObject('test1');
+new TestObject('test2');
+new TestObject('test3');
+new TestObject('test4');
+new TestObject('test5');
+new TestObject('test1');
+new TestObject('test2');
+new TestObject('test3');
+new TestObject('test4');
+new TestObject('test5');
+new TestObject('test1');
+new TestObject('test2');
+new TestObject('test3');
+new TestObject('test4');
+new TestObject('test5');
+new TestObject('test1');
+new TestObject('test2');
+new TestObject('test3');
+new TestObject('test4');
+new TestObject('test5');
+new TestObject('test1');
+new TestObject('test2');
+new TestObject('test3');
+new TestObject('test4');
+new TestObject('test5');
+new TestObject('test1');
+new TestObject('test2');
+new TestObject('test3');
+new TestObject('test4');
+new TestObject('test5');
+new TestObject('test1');
+new TestObject('test2');
+new TestObject('test3');
+new TestObject('test4');
+new TestObject('test5');
+new TestObject('test1');
+new TestObject('test2');
+new TestObject('test3');
+new TestObject('test4');
+new TestObject('test5');
+new TestObject('test1');
+new TestObject('test2');
+new TestObject('test3');
+new TestObject('test4');
+new TestObject('test5');
+new TestObject('test1');
+new TestObject('test2');
+new TestObject('test3');
+new TestObject('test4');
+new TestObject('test5');
 
 
 newChoice();
