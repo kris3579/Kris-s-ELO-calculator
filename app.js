@@ -163,7 +163,7 @@ function calcScore(winner, loser) {
   } else if (winner.score === loser.score) {
     winner.score = Math.floor(winner.score + k * (1 - 0.5));
     loser.score = Math.floor(loser.score + k * (0 - 0.5));
-  } else {
+  } else if (winner.score < loser.score) {
     winner.score = Math.floor(winner.score + k * (1 - lowerProb));
     loser.score = Math.floor(loser.score + k * (0 - higherProb));
   }
