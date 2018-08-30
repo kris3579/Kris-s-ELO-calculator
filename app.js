@@ -2,7 +2,7 @@
 
 let testArray = [];
 let rowsArray = [];
-let noRepeat = [];
+// let noRepeat = [];
 
 
 function TestObject(name) {
@@ -10,6 +10,7 @@ function TestObject(name) {
   // this.picture = picture;
   this.score = 2000;
   this.rank = 1;
+  this.votes = 0;
 
   testArray.push(this);
 }
@@ -21,14 +22,44 @@ let selected2 = document.getElementById('selection2button');
 let selection1;
 let selection2;
 
+function checkVotes() {
+  let thisRoundOfVotes = 0;
+  for (let i = 0; i < testArray.length; i++) {
+    if (testArray[i].votes === 1) {
+      thisRoundOfVotes++;
+    }
+    if (thisRoundOfVotes === testArray.length) {
+      testArray.forEach(element => {
+        element.votes--;
+      });
+    }
+  }
+}
 
 function randomSelection(array) {
-  checkNoRepeat();
-  var random = array[Math.floor(Math.random() * array.length)];
-  while (noRepeat.includes(random.name)) {
-    random = array[Math.floor(Math.random() * array.length)];
+  let random;
+  let returnedRandom;
+  let noVotesArray = [];
+
+  for (let i = 0; i < array.length; i++) {
+    if (array[i].votes === 0) {
+      noVotesArray.push(array[i]);
+    }
   }
-  return random;
+
+  random = noVotesArray[Math.floor(Math.random() * noVotesArray.length)];
+
+  for (let i = 0; i < array.length; i++) {
+    if (random === array[i]) {
+      returnedRandom = array[i];
+    }
+  }
+
+  // checkNoRepeat();
+  // while (noRepeat.includes(random.name)) {
+  //   random = array[Math.floor(Math.random() * array.length)];
+  // }
+  return returnedRandom;
 }
 
 
@@ -39,12 +70,11 @@ function reRollSelections() {
 
 
 function rollSelections() {
+  checkVotes();
   reRollSelections();
   while (selection1 === selection2) {
     reRollSelections();
   }
-  noRepeat.push(selection1);
-  noRepeat.push(selection2);
 }
 
 
@@ -101,6 +131,7 @@ function makeTableHeader() {
 
 
 function makeTableData() {
+  sortRanks(testArray);
   for (let i = 0; i < testArray.length; i++) {
     let dataRow = document.createElement('tr');
 
@@ -112,14 +143,12 @@ function makeTableData() {
     dataRow.appendChild(rank);
 
     name.textContent = testArray[i].name;
-    console.log(testArray[i].name);
     dataRow.appendChild(name);
 
     score.textContent = testArray[i].score;
     dataRow.appendChild(score);
 
     rowsArray.push(dataRow);
-    sortRanks(testArray);
     document.getElementById('table').appendChild(dataRow);
   }
 }
@@ -167,84 +196,55 @@ function calcScore(winner, loser) {
     winner.score = Math.floor(winner.score + k * (1 - lowerProb));
     loser.score = Math.floor(loser.score + k * (0 - higherProb));
   }
+  winner.votes++;
+  loser.votes++;
 }
 
 
-function checkNoRepeat() {
-  if (noRepeat.length === (Math.floor(testArray.length / 2))) {
-    noRepeat.shift();
-    noRepeat.shift();
-  }
-}
+// function checkNoRepeat() {
+//   while (noRepeat.length === (Math.floor(testArray.length / 2))) {
+//     noRepeat.shift();
+//   }
+// }
 
 
 function makeTable() {
   nukeData();
   makeTableHeader();
   makeTableData();
-  // console.log(testArray);
 }
 
 
-new TestObject('aaaaaaaaaaaaaaaaaaaasddddsdtest1');
-new TestObject('aaaaaaaaaaaaaaaaaaaasddddsdtest2');
-new TestObject('aaaaaaaaaaaaaaaaaaaasddddsdtest3');
-new TestObject('aaaaaaaaaaaaaaaaaaaasddddsdtest4');
-new TestObject('aaaaaaaaaaaaaaaaaaaasddddsdtest5');
-new TestObject('aaaaaaaaaaaaaaaaaaaasddddsdtest6');
-new TestObject('aaaaaaaaaaaaaaaaaaaasddddsdtest7');
-new TestObject('aaaaaaaaaaaaaaaaaaaasddddsdtest8');
-new TestObject('aaaaaaaaaaaaaaaaaaaasddddsdtest9');
-new TestObject('aaaaaaaaaaaaaaaaaaaasddddsdtest10');
-new TestObject('aaaaaaaaaaaaaaaaaaaasddddsdtest11');
-new TestObject('aaaaaaaaaaaaaaaaaaaasddddsdtest12');
-new TestObject('aaaaaaaaaaaaaaaaaaaasddddsdtest13');
-new TestObject('aaaaaaaaaaaaaaaaaaaasddddsdtest14');
-new TestObject('aaaaaaaaaaaaaaaaaaaasddddsdtest15');
-new TestObject('aaaaaaaaaaaaaaaaaaaasddddsdtest16');
-new TestObject('aaaaaaaaaaaaaaaaaaaasddddsdtest17');
-new TestObject('aaaaaaaaaaaaaaaaaaaasddddsdtest18');
-new TestObject('aaaaaaaaaaaaaaaaaaaasddddsdtest19');
-new TestObject('aaaaaaaaaaaaaaaaaaaasddddsdtest20');
-new TestObject('aaaaaaaaaaaaaaaaaaaasddddsdtest21');
-new TestObject('aaaaaaaaaaaaaaaaaaaasddddsdtest22');
-new TestObject('aaaaaaaaaaaaaaaaaaaasddddsdtest23');
-new TestObject('aaaaaaaaaaaaaaaaaaaasddddsdtest24');
-new TestObject('aaaaaaaaaaaaaaaaaaaasddddsdtest25');
-new TestObject('aaaaaaaaaaaaaaaaaaaasddddsdtest26');
-new TestObject('aaaaaaaaaaaaaaaaaaaasddddsdtest27');
-new TestObject('aaaaaaaaaaaaaaaaaaaasddddsdtest28');
-new TestObject('aaaaaaaaaaaaaaaaaaaasddddsdtest29');
-new TestObject('aaaaaaaaaaaaaaaaaaaasddddsdtest30');
-new TestObject('aaaaaaaaaaaaaaaaaaaasddddsdtest31');
-new TestObject('aaaaaaaaaaaaaaaaaaaasddddsdtest32');
-new TestObject('aaaaaaaaaaaaaaaaaaaasddddsdtest33');
-new TestObject('aaaaaaaaaaaaaaaaaaaasddddsdtest34');
-new TestObject('aaaaaaaaaaaaaaaaaaaasddddsdtest35');
-new TestObject('aaaaaaaaaaaaaaaaaaaasddddsdtest36');
-new TestObject('aaaaaaaaaaaaaaaaaaaasddddsdtest37');
-new TestObject('aaaaaaaaaaaaaaaaaaaasddddsdtest38');
-new TestObject('aaaaaaaaaaaaaaaaaaaasddddsdtest39');
-new TestObject('aaaaaaaaaaaaaaaaaaaasddddsdtest40');
-new TestObject('aaaaaaaaaaaaaaaaaaaasddddsdtest41');
-new TestObject('aaaaaaaaaaaaaaaaaaaasddddsdtest42');
-new TestObject('aaaaaaaaaaaaaaaaaaaasddddsdtest43');
-new TestObject('aaaaaaaaaaaaaaaaaaaasddddsdtest44');
-new TestObject('aaaaaaaaaaaaaaaaaaaasddddsdtest45');
-new TestObject('aaaaaaaaaaaaaaaaaaaasddddsdtest46');
-new TestObject('aaaaaaaaaaaaaaaaaaaasddddsdtest47');
-new TestObject('aaaaaaaaaaaaaaaaaaaasddddsdtest48');
-new TestObject('aaaaaaaaaaaaaaaaaaaasddddsdtest49');
-new TestObject('aaaaaaaaaaaaaaaaaaaasddddsdtest50');
-new TestObject('aaaaaaaaaaaaaaaaaaaasddddsdtest51');
-new TestObject('aaaaaaaaaaaaaaaaaaaasddddsdtest52');
-new TestObject('aaaaaaaaaaaaaaaaaaaasddddsdtest53');
-new TestObject('aaaaaaaaaaaaaaaaaaaasddddsdtest54');
-new TestObject('aaaaaaaaaaaaaaaaaaaasddddsdtest55');
-new TestObject('aaaaaaaaaaaaaaaaaaaasddddsdtest56');
-new TestObject('aaaaaaaaaaaaaaaaaaaasddddsdtest57');
-new TestObject('aaaaaaaaaaaaaaaaaaaasddddsdtest58');
-new TestObject('aaaaaaaaaaaaaaaaaaaasddddsdtest59');
+new TestObject('test1');
+new TestObject('test2');
+new TestObject('test3');
+new TestObject('test4');
+new TestObject('test5');
+new TestObject('test6');
+new TestObject('test7');
+new TestObject('test8');
+new TestObject('test9');
+new TestObject('test10');
+new TestObject('test11');
+new TestObject('test12');
+new TestObject('test13');
+new TestObject('test14');
+new TestObject('test15');
+new TestObject('test16');
+new TestObject('test17');
+new TestObject('test18');
+new TestObject('test19');
+new TestObject('test20');
+new TestObject('test21');
+new TestObject('test22');
+new TestObject('test23');
+new TestObject('test24');
+new TestObject('test25');
+new TestObject('test26');
+new TestObject('test27');
+new TestObject('test28');
+new TestObject('test29');
+new TestObject('test30');
 
 
 newChoice();
