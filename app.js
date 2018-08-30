@@ -2,7 +2,6 @@
 
 let testArray = [];
 let rowsArray = [];
-// let noRepeat = [];
 
 
 function TestObject(name) {
@@ -55,10 +54,6 @@ function randomSelection(array) {
     }
   }
 
-  // checkNoRepeat();
-  // while (noRepeat.includes(random.name)) {
-  //   random = array[Math.floor(Math.random() * array.length)];
-  // }
   return returnedRandom;
 }
 
@@ -199,13 +194,6 @@ function calcScore(winner, loser) {
   winner.votes++;
   loser.votes++;
 }
-
-
-// function checkNoRepeat() {
-//   while (noRepeat.length === (Math.floor(testArray.length / 2))) {
-//     noRepeat.shift();
-//   }
-// }
 
 
 function makeTable() {
